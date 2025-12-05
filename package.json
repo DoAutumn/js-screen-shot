@@ -1,5 +1,5 @@
 {
-  "name": "js-web-screen-shot",
+  "name": "snapdom-screen-shot",
   "version": "1.9.9-rc.29",
   "description": "web端自定义截屏插件(原生JS版)",
   "main": "dist/screenShotPlugin.common.js",
@@ -10,7 +10,7 @@
   "publisher": "magicalprogrammer@qq.com",
   "scripts": {
     "build-rollup": "rollup -c --splitCss false --compState false --showPKGInfo true",
-    "build-rollup:dev": "rollup -wc --splitCss false --compState false --showPKGInfo true --useDServer true --pkgFormat umd",
+    "build-rollup:dev": "rollup -wc --splitCss false --compState false --showPKGInfo true --useDServer true",
     "build-rollup:prod": "rollup -c --splitCss false --compState true && yarn run fix-dts-path",
     "fix-dts-path": "tsc-alias --outDir ./dist/",
     "test": "jest",
@@ -102,7 +102,7 @@
     }
   },
   "dependencies": {
-    "html2canvas": "1.4.1"
+    "@zumer/snapdom": "^2.0.1"
   },
   "files": [
     "/dist"

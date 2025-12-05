@@ -26,11 +26,8 @@ const commandLineParameters = yargs(process.argv.slice(1)).options({
   // css文件独立状态,默认为内嵌
   splitCss: { type: "string", alias: "spCss", default: "false" },
   // 打包格式, 默认为 umd,esm,common 三种格式
-  packagingFormat: {
-    type: "string",
-    alias: "pkgFormat",
-    default: "umd,esm,common"
-  },
+  // 由于@zumer/snapdom不支持UMD，改为默认只使用esm和common
+  packagingFormat: { type: "string", alias: "pkgFormat", default: "esm,common" },
   // 打包后的js压缩状态
   compressedState: { type: "string", alias: "compState", default: "false" },
   // 显示每个包的占用体积, 默认不显示

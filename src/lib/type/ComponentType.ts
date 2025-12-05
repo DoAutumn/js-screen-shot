@@ -1,3 +1,5 @@
+import { SnapdomOptions } from "@zumer/snapdom";
+
 // 裁剪框节点事件定义
 export type cutOutBoxBorder = {
   x: number;
@@ -176,4 +178,4 @@ export type screenShotType = {
   canvasEvents?: mouseEventType; // 截图画布的事件监听
   h2cIgnoreElementsCallback?: (element: Element) => boolean; // html2canvas模式需要忽略的元素回调
   menuBarHeight?: number; // 菜单栏高度(针对electron中，全屏模式下)
-};
+} & SnapdomOptions;

@@ -24,7 +24,8 @@ import { drawCutOutBox } from "@/lib/split-methods/DrawCutOutBox";
 import { zoomCutOutBoxPosition } from "@/lib/common-methods/ZoomCutOutBoxPosition";
 import { saveBorderArrInfo } from "@/lib/common-methods/SaveBorderArrInfo";
 import { calculateToolLocation } from "@/lib/split-methods/CalculateToolLocation";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
+import { snapdom } from "@zumer/snapdom";
 import PlugInParameters from "@/lib/main-entrance/PlugInParameters";
 import { getDrawBoundaryStatus } from "@/lib/split-methods/BoundaryJudgment";
 import KeyboardEventHandle from "@/lib/split-methods/KeyboardEventHandle";
@@ -148,8 +149,10 @@ export default class ScreenShot {
   private customRightClickEvent: crcEventType = {
     state: false
   };
+  private options: screenShotType;
 
   constructor(options: screenShotType) {
+    this.options = options;
     this.plugInParameters = new PlugInParameters();
     // 提取options中的有用参数设置到全局参数中
     setPlugInParameters(options);
@@ -275,17 +278,41 @@ export default class ScreenShot {
       }
 
       // html2canvas截屏
-      html2canvas(this.screenShotDom ? this.screenShotDom : document.body, {
-        onclone: this.loadCrossImg ? drawCrossImg : undefined,
-        proxy: this.proxyUrl,
-        ignoreElements: this.h2cIgnoreElementsFn,
-        useCORS: this.useCORS
+      // html2canvas(this.screenShotDom ? this.screenShotDom : document.body, {
+      //   onclone: this.loadCrossImg ? drawCrossImg : undefined,
+      //   proxy: this.proxyUrl,
+      //   ignoreElements: this.h2cIgnoreElementsFn,
+      //   useCORS: this.useCORS
+      // })
+      //   .then(canvas => {
+      //     // 装载截图的dom为null则退出
+      //     if (this.screenShotContainer == null) return;
+
+      //     // 存储html2canvas截取的内容
+      //     this.screenShotImageController = canvas;
+      //     // 初始化截图容器
+      //     this.initScreenShot(triggerCallback, context, canvas);
+      //   })
+      //   .catch(err => {
+      //     if (triggerCallback != null) {
+      //       // 获取页面元素成功，执行回调函数
+      //       triggerCallback({ code: -1, msg: err });
+      //     }
+      //   });
+      snapdom(this.screenShotDom ? this.screenShotDom : document.body, {
+        // onclone: this.loadCrossImg ? drawCrossImg : undefined,
+        // proxy: this.proxyUrl,
+        // ignoreElements: this.h2cIgnoreElementsFn,
+        // useCORS: this.useCORS
+        ...this.options
       })
-        .then(canvas => {
+        .then(async value => {
           // 装载截图的dom为null则退出
           if (this.screenShotContainer == null) return;
+          
+          const canvas = await value.toCanvas();
 
-          // 存储html2canvas截取的内容
+          // 存储@zumer/snapdom截取的内容
           this.screenShotImageController = canvas;
           // 初始化截图容器
           this.initScreenShot(triggerCallback, context, canvas);

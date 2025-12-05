@@ -43,7 +43,9 @@ const buildConfig = (packagingFormat = [], compressedState = "false") => {
     const config = {
       file: `dist/screenShotPlugin.${pkgFormat}.js`,
       format: buildFormat(pkgFormat),
-      name: "screenShotPlugin"
+      name: "screenShotPlugin",
+      // 内联动态导入，避免创建多个chunk
+      inlineDynamicImports: true
     };
     // 是否需要对代码进行压缩
     addProperty(config, compressedState === "true", "plugins", [

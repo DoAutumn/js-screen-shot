@@ -8,8 +8,10 @@
     screen
     shot
     demo</title>
-  <script
-    src="./screenShotPlugin.umd.js"></script>
+  <script type="module">
+    import ScreenShotPlugin from './screenShotPlugin.esm.js';
+    window.screenShotPlugin = ScreenShotPlugin;
+  </script>
   <script>
     function setViewSize() {
       document.body.style.width = window.innerWidth + "px";
